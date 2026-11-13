@@ -1,0 +1,12 @@
+{% extends "base.html" %}{% block titulo %}Entrar{% endblock %}{% block subtitulo %}Bem-vindo ao seu banco{% endblock %}
+{% block conteudo %}
+<form method="post" action="/login">
+<label for="cpf">CPF</label><input id="cpf" name="cpf" value="{{ cpf or '' }}" placeholder="000.000.000-00">
+{% if erro %}<div class="err"><b>{{ erro }}</b></div>{% endif %}
+<label for="senha">Senha de acesso</label><input id="senha" name="senha" type="password" maxlength="6">
+<button class="btn" type="submit">Entrar</button>
+</form>
+<a class="btn sec" href="/recuperar">Esqueci minha senha</a>
+<a class="btn sec" href="/abrir-conta">Abrir minha conta</a>
+
+{% endblock %}

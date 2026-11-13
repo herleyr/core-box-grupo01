@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block titulo %}Recuperar senha{% endblock %}{% block subtitulo %}Recuperar senha{% endblock %}
+{% block conteudo %}
+{% if erro %}<div class="err">{{ erro }}</div>{% endif %}{% if info %}<div class="info">{{ info }}</div>{% endif %}
+{% if etapa == 'dados' %}
+<form method="post" action="/recuperar"><div class="muted">Para sua segurança, confirme seus dados:</div>
+<label>CPF</label><input name="cpf"><label>Data de nascimento</label><input name="nascimento" placeholder="DD/MM/AAAA">
+<button class="btn">Enviar código por SMS</button></form>
+<div class="warn" style="margin-top:20px">Trocou de número? A troca é feita com biometria no app ou em uma agência.
+</div>
+{% elif etapa == 'codigo' %}
+<div class="info">Se os dados conferirem, enviamos um código de <b>6 dígitos</b> para o celular {{ celular }}. Ele vale por <b>5 minutos</b>.</div>
+<form method="post" action="/recuperar/confirmar"><input type="hidden" name="cpf" value="{{ cpf }}">
+<label>Código recebido</label><input name="codigo" maxlength="6"><label>Nova senha</label><input name="nova_senha" type="password">
+<button class="btn">Criar nova senha</button></form>
+<div class="muted" style="margin-top:8px">Não recebeu? Aguarde 1 minuto para reenviar.</div>
+{% else %}
+<div class="info">Senha alterada. Por segurança, encerramos suas sessões em outros aparelhos.</div><a class="btn" href="/login">Entrar</a>
+{% endif %}{% endblock %}

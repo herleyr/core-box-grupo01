@@ -1,0 +1,18 @@
+{% extends "base.html" %}{% block largura %}wide{% endblock %}{% block titulo %}Inspetor de Token{% endblock %}
+{% block subtitulo %}SSO • Inspetor de Token (JWT){% endblock %}
+{% block conteudo %}
+<div class="card">
+  <form method="post">
+    <label>Cole o token (JWT) recebido do IdP</label>
+    <textarea name="token" rows="5" style="width:100%;font-family:Consolas,monospace;font-size:12px">{{ token or '' }}</textarea>
+    <button class="btn inline" type="submit">Decodificar</button>
+  </form>
+  <div class="muted" style="margin-top:6px">O inspetor apenas decodifica (base64url) header e payload. Ele NÃO verifica a assinatura — isso é parte do que você deve analisar.</div>
+</div>
+{% if header %}
+<div class="row">
+  <div class="card"><b>Header</b><pre style="white-space:pre-wrap;font-size:12px">{{ header_json }}</pre></div>
+  <div class="card"><b>Payload (claims)</b><pre style="white-space:pre-wrap;font-size:12px">{{ payload_json }}</pre></div>
+</div>
+{% endif %}
+{% endblock %}

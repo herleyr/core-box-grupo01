@@ -1,0 +1,32 @@
+{% extends "base.html" %}{% block largura %}wide{% endblock %}{% block titulo %}Assistente BoxGPT{% endblock %}
+{% block subtitulo %}BoxGPT • Assistente virtual — {{ usuario.nome }} (conversa #{{ conversa_id }}){% endblock %}
+{% block conteudo %}
+<div class="card">
+  <div class="muted">Pergunte sobre saldo, extrato, Pix e dúvidas da sua conta. O BoxGPT pode consultar seus dados para te ajudar.</div>
+  <div id="chat" style="margin-top:12px;min-height:280px;max-height:440px;overflow:auto;border:1px solid #e2e8f0;border-radius:10px;padding:12px;background:#f8fafc">
+    {% for m in mensagens %}
+      <div class="bolha {{ 'cli' if m.papel=='cliente' else 'bot' }}">{{ m.conteudo }}</div>
+    {% endfor %}
+  </div>
+  <div style="display:flex;gap:8px;margin-top:10px">
+    <input id="msg" placeholder="Digite sua mensagem..." style="flex:1" onkeydown="if(event.key==='Enter')enviar()">
+    <button class="btn inline" onclick="enviar()">Enviar</button>
+  </div>
+  <div class="muted" style="margin-top:6px">BoxGPT pode cometer erros. Não compartilhe senhas.</div>
+</div>
+<style>
+.bolha{max-width:80%;padding:9px 12px;border-radius:12px;margin:6px 0;font-size:14px;white-space:pre-wrap}
+.bolha.cli{background:#0B2A4A;color:#fff;margin-left:auto}
+.bolha.bot{background:#eef2f7;color:#1a202c}
+</style>
+<script>
+const chat=document.getElementById('chat');
+function bolha(txt,cls){const d=document.createElement('div');d.className='bolha '+cls;
+  // AI-10: saída do agente inserida como HTML (tratamento inseguro de saída → XSS)
+  d.innerHTML=txt;chat.appendChild(d);chat.scrollTop=chat.scrollHeight;}
+async function enviar(){const i=document.getElementById('msg');const t=i.value.trim();if(!t)return;
+  bolha(t,'cli');i.value='';
+  const r=await fetch('/assistente/api/mensagem',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({texto:t})});
+  const j=await r.json();bolha(j.resposta,'bot');}
+</script>
+{% endblock %}

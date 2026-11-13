@@ -1,0 +1,11 @@
+{% extends "base.html" %}{% block titulo %}Entrar com IdP{% endblock %}{% block subtitulo %}Login federado (SSO){% endblock %}
+{% block conteudo %}
+<div class="card">
+  <b>Entrar com o Provedor de Identidade corporativo</b>
+  <div class="muted" style="margin-top:6px">O Core Box aceita login via OpenID Connect do IdP do banco.</div>
+  <a class="btn" href="{{ authorize_url }}">Entrar com IdP Box</a>
+  <div class="muted" style="margin-top:12px">Requisição de autorização que será enviada:</div>
+  <div class="card" style="background:#1e293b;color:#e2e8f0"><code style="font-size:11px;word-break:break-all">{{ authorize_url }}</code></div>
+  <div class="muted">Para analisar tokens recebidos, use o <a href="/sso/inspecionar">Inspetor de Token</a>.</div>
+</div>
+{% endblock %}

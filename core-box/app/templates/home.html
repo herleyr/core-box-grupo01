@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block titulo %}Início{% endblock %}
+{% block subtitulo %}Olá, <b>{{ usuario.nome }}</b><br><span style="font-size:12px">CPF ***{{ usuario.cpf[3:12] }}** • Ag {{ conta.agencia }} • CC {{ conta.numero }}</span>{% endblock %}
+{% block conteudo %}
+<div class="card"><div class="muted">Saldo disponível</div><div class="saldo">R$ {{ '%.2f'|format(conta.saldo) }}</div>
+<div class="muted">Limite Pix diurno R$ {{ '%.2f'|format(conta.limite_diurno) }} • noturno R$ {{ '%.2f'|format(conta.limite_noturno) }}</div></div>
+<div class="card"><div class="grid"><a class="ico" href="/pix">⇄<br>Pix</a><a class="ico" href="/extrato">▤<br>Extrato</a><a class="ico" href="/assistente">✦<br>BoxGPT</a><a class="ico" href="/sso/inspecionar">🔎<br>Token</a></div></div>
+<div class="card"><b>Segurança</b><div class="muted">O Banco Box nunca pede senha, código ou "atualização de cadastro" por WhatsApp.</div></div>
+{% if dispositivo %}<div class="card"><div class="muted">Último dispositivo vinculado automaticamente</div><div style="font-size:13px">{{ dispositivo.descricao }} — {{ dispositivo.vinculado_em }}</div></div>{% endif %}
+{% endblock %}
